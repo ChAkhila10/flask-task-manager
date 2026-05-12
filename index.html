@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Task Manager</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Smart Task Manager 🚀</h1>
+
+    <!-- FORM -->
+
+    <form method="POST" action="/">
+
+        <input type="text"
+               name="task"
+               placeholder="Enter task">
+
+        <button type="submit">
+            Add Task
+        </button>
+
+    </form>
+
+    <hr>
+
+    <!-- COUNTERS -->
+
+    <div class="stats">
+
+        <h3>Total Tasks: {{ total }}</h3>
+
+        <h3>Completed: {{ completed }}</h3>
+
+        <h3>Pending: {{ pending }}</h3>
+
+    </div>
+
+    <hr>
+
+    <!-- PENDING TASKS -->
+
+    <h2>Pending Tasks</h2>
+
+    {% for task in tasks %}
+
+        {% if not task.done %}
+
+            <div class="task-box">
+
+                <p>{{ task.task }}</p>
+
+                <a href="/complete/{{ loop.index0 }}">
+                    Complete
+                </a>
+
+                <a href="/delete/{{ loop.index0 }}">
+                    Delete
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+    <hr>
+
+    <!-- COMPLETED TASKS -->
+
+    <h2>Completed Tasks</h2>
+
+    {% for task in tasks %}
+
+        {% if task.done %}
+
+            <div class="task-box completed">
+
+                <p>{{ task.task }} ✅</p>
+
+                <a href="/delete/{{ loop.index0 }}">
+                    Delete
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+    <hr>
+
+    <!-- CLEAR BUTTON -->
+
+    <a href="/clear">
+        <button>
+            Clear All Tasks
+        </button>
+    </a>
+
+</div>
+
+</body>
+</html>
